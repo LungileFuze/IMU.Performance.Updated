@@ -9,8 +9,9 @@
         public int? MidtermScore { get; private set; }
 
         public int? MidtermWeightedScore { get; private set; }
+        public int? FinalScore { get; private set; }
 
-        public int FinalWeightedScore { get; private set; }
+        public int? FinalWeightedScore { get; private set; }
 
         public long KeyPerformanceAreaId { get; private set; }
 

@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[Agreement]
+(
+	Id BIGINT NOT NULL PRIMARY KEY IDENTITY(1,10),
+	FinancialYear NVARCHAR(9) NOT NULL,
+	ServiceNumber NVARCHAR(10) NOT NULL,
+	ManagerServiceNumber NVARCHAR(10) NOT NULL,
+	Status INT NOT NULL,
+	DateCreated DATETIME NOT NULL
+)
