@@ -1,4 +1,6 @@
-﻿namespace IMU.Performance.Updated.API.Domain.Entities
+﻿using IMU.Performance.Updated.API.Domain.Exceptions;
+
+namespace IMU.Performance.Updated.API.Domain.Entities
 {
     public class KeyPerformanceArea: BaseEntity
     {
@@ -12,13 +14,12 @@
         public List<KeyPerformanceIndicator> KeyPerformanceIndicators { get; private set; } = new();
         //Agreement table as a foreign key
         public Agreement Agreement { get; private set; } = null!;
-        public KeyPerformanceArea(long agreementId,string description, int weighting, string? managerComment, string? moderatorComment)
+        public KeyPerformanceArea(long agreementId,string description, int weighting)
         {
+            if (weighting > 90 || weighting < 1) throw new DataValidationException("The weighting should be between 1 and 90 inclusive");
             AgreementId = agreementId;
             Description = description;
             Weighting = weighting;
-            ManagerComment = managerComment;
-            ModeratorComment = moderatorComment;
             DateCreated = DateTime.Now;
           
         }

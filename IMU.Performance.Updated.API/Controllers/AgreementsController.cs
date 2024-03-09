@@ -37,6 +37,15 @@ namespace IMU.Performance.Updated.API.Controllers
             await _agreement.CreateAgreement(agreementDto, _cancellationTokenSource.Token);
             return Ok();
         }
+
+        [HttpPost("{agreementId:long}/keyperformanceareas")]
+        public async Task<ActionResult> AddKpa(long agreementId, KeyPerformanceAreaDTO keyPerformanceAreaDTO)
+        {
+            if(keyPerformanceAreaDTO == null) return BadRequest();
+            keyPerformanceAreaDTO.AgreementId = agreementId;
+            await _agreement.AddKpa(keyPerformanceAreaDTO, _cancellationTokenSource.Token);
+            return Ok();
+        }
         //[HttpPut("{agreementId:long}")]
         //public async Task<ActionResult> SendForApproval(long agreementId)
         //{

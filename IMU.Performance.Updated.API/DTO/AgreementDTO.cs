@@ -11,5 +11,7 @@
         public string ManagerServiceNumber { get; set; } = null!;
 
         public int Status { get; set; }
+
+        public List<KeyPerformanceAreaDTO> KeyPerformanceAreas { get; set; } = new();
     }
 }

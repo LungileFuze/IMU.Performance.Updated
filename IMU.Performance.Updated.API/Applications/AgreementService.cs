@@ -17,13 +17,22 @@ namespace IMU.Performance.Updated.API.Applications
         }
         public async Task<IEnumerable<AgreementDTO>> GetAgreements()
         {
-            return await _context.Agreements.Select(a => new AgreementDTO
+            return await _context.Agreements.Include(a => a.KeyPerformanceAreas).Select(a => new AgreementDTO
             {
                 Id = a.Id,
                 FinancialYear = a.FinancialYear,
                 ManagerServiceNumber = a.ManagerServiceNumber,
                 ServiceNumber = a.ServiceNumber,
-                Status = (int)a.Status
+                Status = (int)a.Status,
+                KeyPerformanceAreas = a.KeyPerformanceAreas.Select(k => new KeyPerformanceAreaDTO
+                {
+                    Id = k.Id,
+                    Description = k.Description,
+                    Weighting = k.Weighting,
+                    ManagerComment = k.ManagerComment,
+                    ModeratorComment = k.ModeratorComment
+                }).
+                ToList(),
             }).
             ToListAsync();
         }
@@ -34,6 +43,14 @@ namespace IMU.Performance.Updated.API.Applications
             if (agreement != null) throw new InvalidActionException("Agreement already exist.");
             agreement = new Agreement(agreementDTO.FinancialYear, agreementDTO.ServiceNumber, agreementDTO.ManagerServiceNumber);
             _context.Agreements.Add(agreement);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task AddKpa(KeyPerformanceAreaDTO keyPerformanceAreaDTO, CancellationToken cancellationToken = default)
+        {
+            if(keyPerformanceAreaDTO == null) throw new ArgumentNullException(nameof(keyPerformanceAreaDTO));
+            Agreement? agreement = await _context.Agreements.FirstOrDefaultAsync(a => a.Id == keyPerformanceAreaDTO.AgreementId) ?? throw new NotFoundException("Could not find agreement");
+            agreement.AddKeyPerformanceArea(keyPerformanceAreaDTO.Description, keyPerformanceAreaDTO.Weighting);
             await _context.SaveChangesAsync(cancellationToken);
         }
     }

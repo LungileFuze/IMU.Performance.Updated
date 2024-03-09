@@ -47,5 +47,12 @@ namespace IMU.Performance.Updated.API.Domain.Entities
             if (Status != AgreementStatus.SentForApproval) throw new InvalidActionException("Invalid status.");
             Status = AgreementStatus.Rejected;
         }
+
+        public void AddKeyPerformanceArea(string description, int weighting)
+        {
+            if (KeyPerformanceAreas.Count > 5) throw new BusinessRuleException("An agreement should not have more than 5 key performance areas");
+            var kpa = new KeyPerformanceArea(Id, description, weighting);
+            KeyPerformanceAreas.Add(kpa);
+        }
     }
 }

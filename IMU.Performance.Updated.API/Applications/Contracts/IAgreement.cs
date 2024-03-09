@@ -6,5 +6,7 @@ namespace IMU.Performance.Updated.API.Applications.Contracts
     {
         Task<IEnumerable<AgreementDTO>> GetAgreements();
         Task CreateAgreement(AgreementDTO agreementDTO, CancellationToken cancellationToken);
+
+        Task AddKpa(KeyPerformanceAreaDTO keyPerformanceAreaDTO, CancellationToken cancellationToken = default);
     }
 }
