@@ -9,5 +9,7 @@
         public string ServiceNumber { get; set; } = null!;
 
         public string ManagerServiceNumber { get; set; } = null!;
+
+        public int Status { get; set; }
     }
 }

@@ -15,6 +15,18 @@ namespace IMU.Performance.Updated.API.Applications
             _context = context;
 
         }
+        public async Task<IEnumerable<AgreementDTO>> GetAgreements()
+        {
+            return await _context.Agreements.Select(a => new AgreementDTO
+            {
+                Id = a.Id,
+                FinancialYear = a.FinancialYear,
+                ManagerServiceNumber = a.ManagerServiceNumber,
+                ServiceNumber = a.ServiceNumber,
+                Status = (int)a.Status
+            }).
+            ToListAsync();
+        }
         public async Task CreateAgreement(AgreementDTO agreementDTO, CancellationToken cancellationToken = default)
         {
             if(agreementDTO == null) throw new ArgumentNullException(nameof(agreementDTO));
