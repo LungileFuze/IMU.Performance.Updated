@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IMU.Performance.Updated.API.Controllers
 {
-    [Route("(agreements)")]
+    [Route("agreements")]
     public class AgreementsController : ApiBaseController
     {
 
